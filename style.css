@@ -1,0 +1,262 @@
+/*
+Theme Name: bitTheme
+Theme URI: https://yourdomain.com
+Author: Sania Imran
+Description: Custom WordPress Theme with WooCommerce & BuddyBoss support
+Version: 1.0
+License: GPL2
+Text Domain: bittheme
+*/
+
+/* =========================
+   RESET / BASE
+========================= */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--global-font-family, Arial, sans-serif);
+    font-size: var(--global-font-size, 16px);
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+a {
+    text-decoration: none;
+    color: var(--global-link-color);
+}
+
+a:hover {
+    color: var(--global-link-hover-color);
+}
+
+/* =========================
+   ANNOUNCEMENT BAR
+========================= */
+.announcement-bar {
+    background: #000;
+    padding: 8px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    font-size: 14px;
+}
+
+.announcement-bar p {
+    margin: 0;
+    font-family: var(--header-font-family);
+    font-size: var(--menu-font-size);
+    color: var(--announcement-text-color);
+}
+
+.header-contact {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.header-contact a {
+    font-family: var(--header-font-family);
+    color: var(--announcement-text-color);
+}
+
+.header-contact a:hover {
+    color: var(--global-link-hover-color);
+    text-decoration: underline;
+}
+
+/* =========================
+   HEADER
+========================= */
+.site-header {
+    background-color: var(--header-bg-color);
+}
+
+/* Sticky */
+.site-header.is-sticky {
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+/* =========================
+   HEADER CONTAINER
+========================= */
+.header-container {
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1920px;
+    margin: 0 auto;
+    padding: 24px 40px;
+}
+
+
+/* =========================
+   LAYOUT MODES
+========================= */
+
+/* Logo Left */
+.site-header.layout-left .header-container { 
+    flex-direction: row-reverse; 
+}
+
+/* CENTER BELOW */ 
+.site-header.layout-center_below .header-container { 
+    flex-direction: column-reverse; 
+    text-align: center; 
+    gap: 18px;
+}
+
+/* CENTER + MENU LEFT */ 
+header.site-header.layout-center_left .header-container, 
+header.site-header.layout-center_right .header-container { 
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); 
+} 
+
+header.site-header.layout-center_left .header-container .site-branding,
+ header.site-header.layout-center_right .header-container .site-branding { 
+    text-align: center; 
+}
+
+/* CENTER + MENU RIGHT */ /* RIGHT LOGO */ 
+.site-header.layout-right .header-container { 
+    flex-direction: row;
+}
+
+/* =========================
+   BRANDING
+========================= */
+.site-branding img {
+    width: var(--logo-width);
+    height: auto;
+}
+
+h1.site-title a {
+    font-size: 40px;
+    color: #000;
+    font-family: cursive;
+}
+
+.site-title{
+    margin: 0;
+}
+
+.site-branding .tagline {
+    font-size: 12px;
+    text-transform: uppercase;
+    opacity: 0.7;
+    color: var(--global-tagline-color);
+    margin: 0;
+}
+
+/* =========================
+   NAVIGATION
+========================= */
+.main-navigation ul {
+    display: flex;
+    gap: 20px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.main-navigation ul li > a {
+    font-family: var(--header-font-family);
+    font-size: var(--menu-font-size);
+    color: #000;
+    padding-bottom: 4px;
+    position: relative;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+.main-navigation ul li > a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 1px;
+    background-color: #000;
+    transition: width 0.3s ease;
+}
+
+.main-navigation ul li > a:hover::after {
+    width: 100%;
+}
+
+.main-navigation ul li > a:hover {
+    color: #000;
+    border-color:#000;
+}
+
+.main-navigation ul li.current-menu-item > a {
+    color: #303030;
+    border-bottom: 1px solid #303030;
+}
+
+.main-navigation ul li.current-menu-item > a:hover {
+    border-color: transparent;
+}
+
+/* =========================
+   FOOTER
+========================= */
+.site-footer {
+    background-color: var(--footer-bg-color);
+    color: var(--footer-link-color);
+    padding: 40px;
+}
+.footer-menus {
+    display: flex;
+    gap: 40px;
+    padding: 40px 0; 
+    justify-content: space-between;
+}
+
+.footer-menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-menu ul li {
+    margin-bottom: 8px;
+}
+
+.footer-menu a {
+    color: var(--footer-link-color);
+    font-size: var(--footer-font-size);
+}
+
+.footer-menu a:hover {
+    color: var(--footer-link-hover-color);
+}
+
+.footer-menu-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 14px;
+    color: var(--footer-link-color);
+    text-transform: uppercase;
+}
+
+.site-footer .footer-bottom p {
+    padding: 40px 0;
+    border-top: 1px solid var(--footer-link-hover-color);
+    font-size: var(--footer-font-size);
+    color: var(--footer-link-color);
+    text-align: center;
+    margin: 0;
+}
+
