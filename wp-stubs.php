@@ -25,7 +25,6 @@ if (!function_exists('get_stylesheet_uri')) {
         return '';
     }
 }
-
 if (!function_exists('sanitize_text_field')) {
     function sanitize_text_field($str)
     {

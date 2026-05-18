@@ -1,0 +1,17 @@
+{
+  "apiVersion": 3,
+  "name": "custom/message-block",
+  "title": "Message Block",
+  "category": "widgets",
+  "icon": "smiley",
+  "description": "My first custom block",
+
+  "editorScript": "file:./build/index.js",
+
+  "attributes": {
+    "message": {
+      "type": "text",
+      "default": "Hello World"
+    }
+  }
+}
