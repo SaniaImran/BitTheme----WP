@@ -15,6 +15,10 @@ function bittheme_setup()
         'flex-height' => true,
         'flex-width'  => true,
     ));
+    add_theme_support('woocommerce');
+    add_theme_support('wc-product-gallery-zoom');
+    add_theme_support('wc-product-gallery-lightbox');
+    add_theme_support('wc-product-gallery-slider');
 }
 add_action('after_setup_theme', 'bittheme_setup');
 
@@ -35,6 +39,43 @@ function bittheme_scripts()
     wp_enqueue_script('bittheme-script', get_template_directory_uri() . '/assets/js/theme.js', array('jquery', 'owl-carousel-js'), null, true);
 }
 add_action('wp_enqueue_scripts', 'bittheme_scripts');
+
+
+function bittheme_register_block_assets()
+{
+    $dir = get_template_directory();
+    $uri = get_template_directory_uri();
+
+    wp_register_script(
+        'bittheme-faq-block-editor',
+        $uri . '/assets/js/faq-block-editor.js',
+        array('wp-blocks', 'wp-element', 'wp-block-editor', 'wp-components', 'wp-i18n'),
+        filemtime($dir . '/assets/js/faq-block-editor.js'),
+        true
+    );
+
+    wp_register_script(
+        'bittheme-faq-block-frontend',
+        $uri . '/assets/js/faq-block-frontend.js',
+        array(),
+        filemtime($dir . '/assets/js/faq-block-frontend.js'),
+        true
+    );
+
+    wp_register_style(
+        'bittheme-faq-block-style',
+        $uri . '/assets/css/faq-block.css',
+        array(),
+        filemtime($dir . '/assets/css/faq-block.css')
+    );
+
+    register_block_type('bittheme/faq-block', array(
+        'editor_script' => 'bittheme-faq-block-editor',
+        'script' => 'bittheme-faq-block-frontend',
+        'style' => 'bittheme-faq-block-style',
+    ));
+}
+add_action('init', 'bittheme_register_block_assets');
 
 
 /* =========================
@@ -931,16 +972,16 @@ function bytetheme_slider_shortcode($atts)
     }
 
     $slide_count = count($slides);
-    $use_carousel = $slide_count > 2;
+    $use_carousel = $slide_count > 1;
 
     ob_start();
 ?>
     <div class="bytetheme-slider-shortcode<?php echo $use_carousel ? ' owl-carousel' : ''; ?>" data-carousel="<?php echo $use_carousel ? 'true' : 'false'; ?>">
         <?php foreach ($slides as $slide): ?>
             <div class="bytetheme-slider-item" style="background-image:url('<?php echo esc_url($slide['image']); ?>');"> 
-                <div class="bytetheme-slider-content">
+                <div class="bytetheme-slider-content<?php echo !$use_carousel ? ' slide-active' : ''; ?>">
                     <?php if (!empty($slide['heading'])): ?>
-                        <h2><?php echo esc_html($slide['heading']); ?></h2>
+                        <h1><?php echo esc_html($slide['heading']); ?></h1>
                     <?php endif; ?>
 
                     <?php if (!empty($slide['text'])): ?>
@@ -1033,9 +1074,35 @@ function bittheme_register_blocks() {
         get_template_directory() . '/blocks/message-block'
     );
 
+    register_block_type(
+        get_template_directory() . '/blocks/faq-block'
+    );
+
+    register_block_type(
+        get_template_directory() . '/blocks/featured-highlights-block'
+    );
+
+    register_block_type(
+        get_template_directory() . '/blocks/image-content-block'
+    );
+
 }
 
 add_action('init', 'bittheme_register_blocks');
+
+// Ensure block front-end styles are loaded when used in theme
+function bittheme_enqueue_block_frontend_styles() {
+    $block_style_path = get_template_directory() . '/blocks/image-content-block/style.css';
+    if ( file_exists( $block_style_path ) ) {
+        wp_enqueue_style(
+            'bittheme-image-content-block-style',
+            get_template_directory_uri() . '/blocks/image-content-block/style.css',
+            array(),
+            filemtime( $block_style_path )
+        );
+    }
+}
+add_action('wp_enqueue_scripts', 'bittheme_enqueue_block_frontend_styles');
 
 
 

@@ -1,7 +1,10 @@
 <?php
 get_header();
 
-echo do_shortcode('[bytetheme_slider id=53]');
-the_content();
+if (have_posts()) :
+    while (have_posts()) : the_post();
+        the_content();
+    endwhile;
+endif;
 
 get_footer();
