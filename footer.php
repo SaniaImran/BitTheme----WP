@@ -29,7 +29,7 @@
 
     <div class="footer-bottom">
         <p>
-            <?php echo esc_html(get_theme_mod('footer_text', '© 2026 byteTheme')); ?>
+            <?php echo esc_html(get_theme_mod('footer_text', '© 2026 bitThemes')); ?>
         </p>
     </div>
 
